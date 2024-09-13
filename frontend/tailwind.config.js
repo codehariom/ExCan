@@ -1,3 +1,5 @@
+const { Skeleton } = require("@mui/material");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
@@ -27,6 +29,19 @@ module.exports = {
         ],
 
         roboto: ["Roboto"],
+      },
+      animation: {
+        skeleton: "skeleton .4s ease-in-out infinite alternate-reverse",
+      },
+      keyframes: {
+        skeleton: {
+          "0%": {
+            background: "rgba(199,199,199,1)",
+          },
+          "100%": {
+            background: "rgba(199,199,199,.6)",
+          },
+        },
       },
     },
   },

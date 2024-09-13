@@ -1,9 +1,10 @@
 import Home from "../pages/Home/Home";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Account } from "../pages/Home/Account";
+import { Account } from "../pages/Account/Account";
 import { LoginForm } from "../components/LoginForm/LoginForm";
 import { SignUpForm } from "../components/SignUpForm/SignUpForm";
+import { Dashboard } from "../pages/Dashboard/Dashboard";
 
 function ClientSideRoutes() {
   return (
@@ -13,6 +14,7 @@ function ClientSideRoutes() {
         <Route path="log-in" element={<LoginForm />}></Route>
         <Route path="sign-up" element={<SignUpForm />}></Route>
       </Route>
+      <Route path="/dashboard" element={<Dashboard />}></Route>
     </Routes>
   );
 }
