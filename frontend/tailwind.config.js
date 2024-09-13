@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        mainGreen: "#5bc136",
+      },
       backgroundImage: {
         "image-with-overlay": `
           linear-gradient(180deg, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 93%), 
