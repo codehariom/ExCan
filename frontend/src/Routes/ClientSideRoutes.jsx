@@ -5,6 +5,7 @@ import { Account } from "../pages/Account/Account";
 import { LoginForm } from "../components/LoginForm/LoginForm";
 import { SignUpForm } from "../components/SignUpForm/SignUpForm";
 import { Dashboard } from "../pages/Dashboard/Dashboard";
+import { InterviewDetails } from "../pages/InterviewDetails/InterviewDetails";
 
 function ClientSideRoutes() {
   return (
@@ -15,6 +16,10 @@ function ClientSideRoutes() {
         <Route path="sign-up" element={<SignUpForm />}></Route>
       </Route>
       <Route path="/dashboard" element={<Dashboard />}></Route>
+      <Route
+        path="/interview/:mockInterviewId"
+        element={<InterviewDetails />}
+      ></Route>
     </Routes>
   );
 }

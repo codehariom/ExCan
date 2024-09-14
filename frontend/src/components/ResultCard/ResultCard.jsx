@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const ResultCard = ({ title, exp, date }) => {
+  const navigate = useNavigate();
+  const navigateToDetails = (id) => navigate(`/interview/${id}`);
+
   return (
     <div className="bg-slate-50 rounded w-full basis-[280px] flex-grow flex flex-col p-5 gap-y-1 border">
       <h1 className="text-[#5bc136] font-bold">{title}</h1>
@@ -22,6 +26,7 @@ export const ResultCard = ({ title, exp, date }) => {
           Start
         </Button>
         <Button
+          onClick={() => navigateToDetails("123")}
           sx={{
             color: "#5bc136",
             borderColor: "#5bc136",
