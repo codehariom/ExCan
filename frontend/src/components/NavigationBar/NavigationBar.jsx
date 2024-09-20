@@ -29,7 +29,7 @@ const NavigationBar = () => {
         } sm:flex-row mt-4 sm:mt-0 space-y-2 sm:space-y-0 sm:items-center sm:space-x-4 px-1 sm:px-0`}
       >
         <Link
-          to="/new-interview"
+          to="/interview/new"
           className="hover:text-mainGreen transition duration-[.2] font-bold"
         >
           Start

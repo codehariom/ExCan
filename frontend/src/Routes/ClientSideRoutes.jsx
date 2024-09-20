@@ -6,6 +6,7 @@ import { LoginForm } from "../components/LoginForm/LoginForm";
 import { SignUpForm } from "../components/SignUpForm/SignUpForm";
 import { Dashboard } from "../pages/Dashboard/Dashboard";
 import { InterviewDetails } from "../pages/InterviewDetails/InterviewDetails";
+import NewInterview from "../pages/NewInterview/NewInterview";
 
 function ClientSideRoutes() {
   return (
@@ -20,6 +21,7 @@ function ClientSideRoutes() {
         path="/interview/:mockInterviewId"
         element={<InterviewDetails />}
       ></Route>
+      <Route path="/interview/new" element={<NewInterview />}></Route>
     </Routes>
   );
 }
