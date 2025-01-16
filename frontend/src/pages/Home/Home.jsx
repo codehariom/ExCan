@@ -3,6 +3,9 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import Card from "../../components/Card/Card";
 import Button from "@mui/material/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaRegCopy } from "react-icons/fa";
+import { SiTestcafe } from "react-icons/si";
+import { MdSelfImprovement } from "react-icons/md";
 
 function Home() {
   return (
@@ -58,9 +61,25 @@ function Home() {
         </h2>
 
         <div className="flex flex-col md:flex-row py-20 space-y-5 sm:space-y-0 gap-x-5 items-center">
-          <Card />
-          <Card />
-          <Card />
+          <Card
+            title={"Fill the details"}
+            subtitle={"Enter the Role, Skills and select the experience level."}
+            Icon={FaRegCopy}
+          />
+          <Card
+            title={"Give the Interview"}
+            subtitle={
+              "Answer the AI-generated questions, and let them be recorded."
+            }
+            Icon={SiTestcafe}
+          />
+          <Card
+            title={"Get the Feedback"}
+            subtitle={
+              "Once the interview is completed, AI will provide you with detailed feedback."
+            }
+            Icon={MdSelfImprovement}
+          />
         </div>
       </div>
     </>

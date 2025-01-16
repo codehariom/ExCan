@@ -7,6 +7,7 @@ import { SignUpForm } from "../components/SignUpForm/SignUpForm";
 import { Dashboard } from "../pages/Dashboard/Dashboard";
 import { InterviewDetails } from "../pages/InterviewDetails/InterviewDetails";
 import NewInterview from "../pages/NewInterview/NewInterview";
+import InterviewPanel from "../pages/InterviewPanel/InterviewPanel";
 
 function ClientSideRoutes() {
   return (
@@ -22,6 +23,10 @@ function ClientSideRoutes() {
         element={<InterviewDetails />}
       ></Route>
       <Route path="/interview/new" element={<NewInterview />}></Route>
+      <Route
+        path="/interview/new/:newInterviewId"
+        element={<InterviewPanel />}
+      ></Route>
     </Routes>
   );
 }

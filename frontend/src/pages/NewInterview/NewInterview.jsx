@@ -2,6 +2,8 @@ import React, { useReducer, useState } from "react";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { FaPlus } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
 
 const initialFormState = { jobRole: "", skills: "", experience: null };
 
@@ -19,6 +21,17 @@ function formReducer(state, action) {
 export default function NewInterview() {
   const [formState, dispatchForm] = useReducer(formReducer, initialFormState);
   const [displayError, setDisplayError] = useState(false);
+  const [audPermission, setAudPermission] = useState({ permission: null });
+  const [vidPermission, setVidPermission] = useState({ permission: null });
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   function handleInput(type, value) {
     setDisplayError(false);
@@ -36,11 +49,82 @@ export default function NewInterview() {
       formState.experience == ""
     ) {
       setDisplayError(true);
-      return;
+      return false;
+    }
+
+    return true;
+  }
+
+  // Following function will handle Aud
+
+  async function grantTheAudioPermission() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      return { permission: true, stream };
+    } catch (error) {
+      throw new Error({ message: error.name, from: "Aud" });
     }
   }
 
-  console.log(formState);
+  // Following function will handle Vid
+
+  async function grantTheVideoPermission() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+      return { permission: true, stream };
+    } catch (error) {
+      throw new Error({ message: error.name, from: "Vid" });
+    }
+  }
+
+  // Handle start new interview function
+
+  async function handleStart() {
+    const ot = handleForm();
+
+    if (ot) {
+      const temp = Promise.allSettled([
+        grantTheVideoPermission(),
+        grantTheAudioPermission(),
+      ]);
+
+      temp.then((res) => {
+        const audioResult = res[1];
+        const videoResult = res[0];
+
+        if (audioResult.status === "fulfilled") {
+          setAudPermission((prev) => ({
+            ...prev,
+            permission: true,
+            stream: audioResult.value.stream,
+          }));
+        } else {
+          setAudPermission((prev) => ({
+            ...prev,
+            permission: false,
+          }));
+
+          handleClickOpen(true);
+        }
+
+        if (videoResult.status === "fulfilled") {
+          setVidPermission((prev) => ({
+            ...prev,
+            permission: true,
+            stream: videoResult.value.stream,
+          }));
+        } else {
+          setVidPermission((prev) => ({
+            ...prev,
+            permission: false,
+          }));
+        }
+      });
+    } else {
+      return;
+    }
+  }
 
   return (
     <>
@@ -50,7 +134,7 @@ export default function NewInterview() {
           <h1 className="text-2xl font-bold">Start a new mock interview</h1>
         </div>
 
-        <div className="w-full flex flex-wrap gap-x-8 mb-10 border border-gray-200 rounded-md py-10 px-5">
+        <div className="w-full flex flex-wrap gap-x-8 gap-y-10 sm:gap-y-0 mb-10 border border-gray-200 rounded-md py-10 px-5">
           <div className="flex-grow">
             <div className="font-bold text-sm text-gray-600 mb-8">
               Enter your job role/position
@@ -82,6 +166,7 @@ export default function NewInterview() {
 
             <TextField
               onChange={(e) => handleInput(e.target.id, e.target.value)}
+              fullWidth
               id="experience"
               label="Experience"
               type="number"
@@ -99,7 +184,7 @@ export default function NewInterview() {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full flex flex-col items-center">
           <h3 className="text-xs font-bold mb-5 italic">
             The application requires your permission to access audio for
             processing your responses and providing feedback. Granting this
@@ -109,15 +194,37 @@ export default function NewInterview() {
           </h3>
 
           <div
-            className="border-2 border-green-600 border-dotted h-20 rounded-lg flex justify-center items-center cursor-pointer hover:bg-green-200 transition bg-green-100"
-            onClick={() => handleForm()}
+            className="border-2 border-green-600 h-[50px] rounded-lg flex justify-center items-center cursor-pointer hover:bg-green-200 transition bg-green-100 w-[200px]"
+            onClick={() => handleStart()}
           >
             <span className="flex justify-center items-center gap-x-2 text-lg font-bold text-green-600">
-              <FaPlus className="" /> Start new
+              <FaPlus className="" /> START NEW
             </span>
           </div>
         </div>
       </div>
+
+      <Dialog open={openDialog} onClose={handleClose}>
+        <div className="p-6 bg-white rounded-lg text-center">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Audio Access Required
+          </h2>
+          <p className="text-gray-600 mb-4">
+            We need audio access to process your responses and provide feedback.
+            This is required. Additionally video access is optional and will not
+            be recorded or processed.
+          </p>
+          <Button
+            sx={{
+              backgroundColor: "#5bc136",
+              color: "white",
+            }}
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+        </div>
+      </Dialog>
     </>
   );
 }

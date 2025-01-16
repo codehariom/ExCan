@@ -31,11 +31,48 @@ export const Dashboard = () => {
       <NavigationBar />
       <div className="px-5 sm:px-20 py-10">
         {/* Progress graph */}
+
         <div className="mb-7">
-          <h1 className="text-gray-900 text-xl font-bold">Progress graph</h1>
+          <h1 className="text-gray-900 text-xl font-bold">Your progress</h1>
         </div>
-        <div className="max-w-96 h-52 mb-7">
-          <Line data={data} />
+
+        <div className="flex gap-x-5 flex-col lg:flex-row gap-y-10 mb-20">
+          <div className="w-full space-y-3 flex gap-x-2 justify-center lg:justify-start items-center">
+            {/* Profile picture */}
+
+            <div className="w-32 h-32 bg-[#5bc136] rounded-full mt-5 overflow-hidden shrink-0">
+              <div className="w-32 h-32 bg-blue-900 rounded-full mt-1 ml-1 overflow-hidden border-2 border-[#ffffff]">
+                <img src="/mine.jpg" alt="" />
+              </div>
+            </div>
+
+            <div className="">
+              <p className="font-bold -ml-4">
+                You've attended a total of <span className="text-lg">5</span>{" "}
+                interviews.
+              </p>
+              <p className="font-bold -ml-2">
+                You've been asked <span className="text-lg">5</span> questions
+                so far.
+              </p>
+              <p className="font-bold -ml-1">
+                You've nailed <span className="text-lg">100</span> questions
+                correctly.
+              </p>
+              <p className="font-bold -ml-2">
+                There were <span className="text-lg">50</span> unanswered
+                questions.
+              </p>
+              <p className="font-bold -ml-4">
+                You've got <span className="text-lg">40</span> questions wrong,
+                but that's part of the learning process.
+              </p>
+            </div>
+          </div>
+
+          <div className="h-96 lg:h-52 flex justify-center">
+            <Line data={data} />
+          </div>
         </div>
 
         <div className="mb-7">
