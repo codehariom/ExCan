@@ -4,6 +4,10 @@ import { FaPlus } from "react-icons/fa";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAudioStream } from "../../Redux/Slices/media";
+import { setVideoStream } from "../../Redux/Slices/media";
 
 const initialFormState = { jobRole: "", skills: "", experience: null };
 
@@ -21,9 +25,9 @@ function formReducer(state, action) {
 export default function NewInterview() {
   const [formState, dispatchForm] = useReducer(formReducer, initialFormState);
   const [displayError, setDisplayError] = useState(false);
-  const [audPermission, setAudPermission] = useState({ permission: null });
-  const [vidPermission, setVidPermission] = useState({ permission: null });
   const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -93,32 +97,18 @@ export default function NewInterview() {
         const audioResult = res[1];
         const videoResult = res[0];
 
-        if (audioResult.status === "fulfilled") {
-          setAudPermission((prev) => ({
-            ...prev,
-            permission: true,
-            stream: audioResult.value.stream,
-          }));
-        } else {
-          setAudPermission((prev) => ({
-            ...prev,
-            permission: false,
-          }));
+        if (
+          audioResult.status === "fulfilled" &&
+          videoResult.status === "fulfilled"
+        ) {
+          // This is where we will start the interview
 
+          dispatch(setAudioStream(audioResult.value.stream));
+          dispatch(setVideoStream(videoResult.value.stream));
+
+          navigate(`/interview/new/${1234}`);
+        } else {
           handleClickOpen(true);
-        }
-
-        if (videoResult.status === "fulfilled") {
-          setVidPermission((prev) => ({
-            ...prev,
-            permission: true,
-            stream: videoResult.value.stream,
-          }));
-        } else {
-          setVidPermission((prev) => ({
-            ...prev,
-            permission: false,
-          }));
         }
       });
     } else {
