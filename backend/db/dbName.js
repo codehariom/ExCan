@@ -1,1 +1,1 @@
-export const dbName = "Excan";
+export const dbName = "excan";
