@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+
+// schema 
 const interviewModel = new mongoose.Schema({
     interviewId:{
         type:String
@@ -13,7 +15,8 @@ const interviewModel = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:["Students","Teacher"]
+        enum:["Students","Teacher"],
+        default:"Student"
     },
     experience:{
         type:Number
@@ -29,4 +32,5 @@ const interviewModel = new mongoose.Schema({
     timestamps:true
 })
 
+// user model 
 export const interview = mongoose.model("interview" , interviewModel);
