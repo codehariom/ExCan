@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -r dotenv/config --experimental-json-module index.js"
+    "start": " nodemon -r dotenv/config --experimental-json-modules index.js "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
