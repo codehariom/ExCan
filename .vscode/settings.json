@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["roboto"]
+  "cSpell.words": [
+    "roboto"
+  ],
+  "postman.settings.dotenv-detection-notification-visibility": false
 }
